@@ -1,3 +1,21 @@
+## 22.06.2
+- Added direct requests support
+- Fixed missing remote config consent in consents request
+
+- Other various improvements
+  - Updated some pragma marks
+
+
+
+## 22.06.1
+- Fixed user details consent issue on SDK start
+- Updated feedback widget internal webview design and layout
+
+- Other various improvements
+  - Updated HeaderDocs, internal logs, inline notes and pragma marks
+
+
+
 ## 22.06.0
 - Added `CountlyAutoViewTrackingName` protocol for supporting custom view titles with AutoViewTracking
 - Added `setNewURLSessionConfiguration:` method to be able change URL session configuraion on the go (thanks @angelix)

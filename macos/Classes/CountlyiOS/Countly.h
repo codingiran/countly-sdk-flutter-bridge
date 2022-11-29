@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)startWithConfig:(CountlyConfig *)config;
 
+
+
+#pragma mark - Override Configuration
+
 /**
  * Sets a new host to be used in requests.
  * @discussion Requests already queued previously will also be using the new host.
@@ -41,12 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setNewHost:(NSString *)newHost;
 
 /**
- * Sets a new URL session configuration to be used with all requests.
- * @param newURLSessionConfiguration The new URL session configuration
- */
-- (void)setNewURLSessionConfiguration:(NSURLSessionConfiguration *)newURLSessionConfiguration;
-
-/**
  * Sets a new app key to be used in new requests.
  * @discussion Before switching to the new app key, this method suspends Countly and resumes it immediately after.
  * @discussion The requests already queued prior to this method call will keep using the old app key.
@@ -55,6 +53,16 @@ NS_ASSUME_NONNULL_BEGIN
  * @param newAppKey The new app key
  */
 - (void)setNewAppKey:(NSString *)newAppKey;
+
+/**
+ * Sets a new URL session configuration to be used with all requests.
+ * @param newURLSessionConfiguration The new URL session configuration
+ */
+- (void)setNewURLSessionConfiguration:(NSURLSessionConfiguration *)newURLSessionConfiguration;
+
+
+
+#pragma mark - Queue Operations
 
 /**
  * Flushes request and event queues.
@@ -76,6 +84,19 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion these requests will be removed from request queue.
  */
 - (void)removeDifferentAppKeysFromQueue;
+
+/**
+ * Adds a direct request to the queue using given key-value pairs as query string pairs.
+ * @discussion requestParameters should be an @c NSDictionary, with keys and values are both @c NSString's only.
+ * @discussion Calls to this method will be ignored if:
+ * @discussion - There are not any consents given while @c requiresConsent flag is set on initial configuration.
+ * @param requestParameters Query string key-value pairs to be used in direct request
+ */
+- (void)addDirectRequest:(NSDictionary<NSString *, NSString *> * _Nullable)requestParameters;
+
+
+
+#pragma mark - Sessions
 
 /**
  * Starts session and sends @c begin_session request with default metrics for manual session handling.
@@ -526,7 +547,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param widgetID ID of the feedback widget created on Countly Server.
  * @param completionHandler A completion handler block to be executed when feedback widget is dismissed by user or there is an error.
  */
-- (void)presentFeedbackWidgetWithID:(NSString *)widgetID completionHandler:(void (^)(NSError * __nullable error))completionHandler DEPRECATED_MSG_ATTRIBUTE("Use 'presentRatingWidgetWithID:' method instead!");
+- (void)presentFeedbackWidgetWithID:(NSString *)widgetID completionHandler:(void (^)(NSError * __nullable error))completionHandler DEPRECATED_MSG_ATTRIBUTE("Use 'presentRatingWidgetWithID:completionHandler' method instead!");
 
 /**
  * Presents rating widget with given ID in a WKWebView placed in a UIViewController.
@@ -599,7 +620,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Records indirect attribution with given key-value pairs.
- * @discussion Keys could be a predefined CLYAttributionKey or any non-zero length valid string.
+ * @discussion Keys could be a predefined @c CLYAttributionKey or any non-zero length valid string.
  * @discussion This method sends an immediate request.
  * @discussion Calls to this method will be ignored if:
  * @discussion - Consent for @c CLYConsentAttribution is not given, while @c requiresConsent flag is set on initial configuration.
