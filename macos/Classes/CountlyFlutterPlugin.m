@@ -16,7 +16,7 @@
 @end
 
 NSString* const kCountlyFlutterSDKVersion = @"22.02.0";
-NSString* const kCountlyFlutterSDKName = @"dart-flutterb-macos";
+NSString* const kCountlyFlutterSDKName = @"dart-flutterb-ios";
 
 FlutterResult notificationListener = nil;
 NSDictionary *lastStoredNotification = nil;
