@@ -779,7 +779,7 @@ FlutterMethodChannel* _channel;
                 result(feedbackWidgetsArray);
             }];
         });
-    } else if ([@"presentFeedbackWidget" isEqualToString:call.method]) {
+    }else if ([@"presentFeedbackWidget" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* widgetId = [command objectAtIndex:0];
             CountlyFeedbackWidget* feedbackWidget = [self getFeedbackWidget:widgetId];
@@ -799,7 +799,7 @@ FlutterMethodChannel* _channel;
             }
             
         });
-    } else if ([@"getFeedbackWidgetData" isEqualToString:call.method]) {
+    }else if ([@"getFeedbackWidgetData" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* widgetId = [command objectAtIndex:0];
             CountlyFeedbackWidget* feedbackWidget = [self getFeedbackWidget:widgetId];
@@ -823,9 +823,7 @@ FlutterMethodChannel* _channel;
                 }];
             }
         });
-    } 
-    #endif
-    else if ([@"reportFeedbackWidgetManually" isEqualToString:call.method]) {
+    }else if ([@"reportFeedbackWidgetManually" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSArray* widgetInfo = [command objectAtIndex:0];
             //        NSDictionary* widgetData = [command objectAtIndex:1];
@@ -843,34 +841,36 @@ FlutterMethodChannel* _channel;
                 [feedbackWidget recordResult:widgetResult];
             }
         });
-    }else if ([@"replaceAllAppKeysInQueueWithCurrentAppKey" isEqualToString:call.method]) {
+    }
+    #endif
+    else if ([@"replaceAllAppKeysInQueueWithCurrentAppKey" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             [Countly.sharedInstance replaceAllAppKeysInQueueWithCurrentAppKey];
         });
         result(@"requestQueueOverwriteAppKeys: success");
-    } else if ([@"removeDifferentAppKeysFromQueue" isEqualToString:call.method]) {
+    }else if ([@"removeDifferentAppKeysFromQueue" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             [Countly.sharedInstance removeDifferentAppKeysFromQueue];
         });
         result(@"requestQueueEraseAppKeysRequests: success");
-    } else if ([@"startTrace" isEqualToString:call.method]) {
+    }else if ([@"startTrace" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* traceKey = [command objectAtIndex:0];
             [Countly.sharedInstance startCustomTrace: traceKey];
         });
         result(@"startTrace: success");
-    } else if ([@"cancelTrace" isEqualToString:call.method]) {
+    }else if ([@"cancelTrace" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* traceKey = [command objectAtIndex:0];
             [Countly.sharedInstance cancelCustomTrace: traceKey];
         });
         result(@"cancelTrace: success");
-    } else if ([@"clearAllTraces" isEqualToString:call.method]) {
+    }else if ([@"clearAllTraces" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             [Countly.sharedInstance clearAllCustomTraces];
         });
         result(@"clearAllTrace: success");
-    } else if ([@"endTrace" isEqualToString:call.method]) {
+    }else if ([@"endTrace" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* traceKey = [command objectAtIndex:0];
             NSMutableDictionary *metrics = [[NSMutableDictionary alloc] init];
@@ -885,7 +885,7 @@ FlutterMethodChannel* _channel;
             [Countly.sharedInstance endCustomTrace: traceKey metrics: metrics];
         });
         result(@"endTrace: success");
-    } else if ([@"recordNetworkTrace" isEqualToString:call.method]) {
+    }else if ([@"recordNetworkTrace" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             @try{
                 NSString* networkTraceKey = [command objectAtIndex:0];
@@ -901,13 +901,13 @@ FlutterMethodChannel* _channel;
             }
         });
         result(@"recordNetworkTrace: success");
-    } else if ([@"enableApm" isEqualToString:call.method]) {
+    }else if ([@"enableApm" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             config.enablePerformanceMonitoring = YES;
         });
         result(@"enableApm: success");
         
-    } else if ([@"throwNativeException" isEqualToString:call.method]) {
+    }else if ([@"throwNativeException" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSException *e = [NSException exceptionWithName:@"Native Exception Crash!" reason:@"Throw Native Exception..." userInfo:nil];
             @throw e;
@@ -924,8 +924,7 @@ FlutterMethodChannel* _channel;
                 config.campaignData = campaignData;
             }
         });
-    }
-    else if([@"recordIndirectAttribution" isEqualToString:call.method]) {
+    }else if([@"recordIndirectAttribution" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSDictionary* attributionValues = [command objectAtIndex:0];
             if(CountlyCommon.sharedInstance.hasStarted) {
@@ -940,7 +939,7 @@ FlutterMethodChannel* _channel;
             [Countly.sharedInstance appLoadingFinished];
         });
         result(@"appLoadingFinished: success");
-    } else {
+    }else {
         result(FlutterMethodNotImplemented);
     }
 }
