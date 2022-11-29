@@ -53,17 +53,13 @@ NSString* const kCountlyFBKeyShown          = @"shown";
         return;
 
     __block CLYInternalViewController* webVC = CLYInternalViewController.new;
-    webVC.view.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.4];
+    webVC.view.backgroundColor = UIColor.whiteColor;
+    webVC.view.bounds = UIScreen.mainScreen.bounds;
     webVC.modalPresentationStyle = UIModalPresentationCustom;
 
     WKWebView* webView = [WKWebView.alloc initWithFrame:webVC.view.bounds];
-    webView.layer.shadowColor = UIColor.blackColor.CGColor;
-    webView.layer.shadowOpacity = 0.5;
-    webView.layer.shadowOffset = (CGSize){0.0f, 5.0f};
-    webView.layer.masksToBounds = NO;
     webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [webVC.view addSubview:webView];
-    webVC.webView = webView;
     NSURLRequest* request = [self displayRequest];
     [webView loadRequest:request];
 
@@ -80,8 +76,8 @@ NSString* const kCountlyFBKeyShown          = @"shown";
 
         [self recordReservedEventForDismissing];
     };
-    [webView addSubview:dismissButton];
-    [dismissButton positionToTopRight];
+    [webVC.view addSubview:dismissButton];
+    [dismissButton positionToTopRightConsideringStatusBar];
 
     [CountlyCommon.sharedInstance tryPresentingViewController:webVC withCompletion:appearBlock];
 }
