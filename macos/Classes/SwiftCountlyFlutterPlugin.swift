@@ -1,9 +1,9 @@
 import FlutterMacOS
-import AppKit
+import Cocoa
 
 public class SwiftCountlyFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "countly_flutter", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "countly_flutter", binaryMessenger: registrar.messenger)
     let instance = SwiftCountlyFlutterPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
