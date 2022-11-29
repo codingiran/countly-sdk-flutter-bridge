@@ -1,4 +1,4 @@
-import Flutter
+import FlutterMacOS
 import AppKit
 
 public class SwiftCountlyFlutterPlugin: NSObject, FlutterPlugin {
