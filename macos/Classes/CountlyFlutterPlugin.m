@@ -733,7 +733,9 @@ FlutterMethodChannel* _channel;
                 result([value stringValue]);
             }
         });
-    }else if ([@"presentRatingWidgetWithID" isEqualToString:call.method]) {
+    }
+    #if (TARGET_OS_IOS)
+    else if ([@"presentRatingWidgetWithID" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSString* widgetId = [command objectAtIndex:0];
             [Countly.sharedInstance presentRatingWidgetWithID:widgetId completionHandler:^(NSError* error){
@@ -757,15 +759,11 @@ FlutterMethodChannel* _channel;
         });
         result(@"setStarRatingDialogTexts: success");
     }else if ([@"askForStarRating" isEqualToString:call.method]) {
-        #if (TARGET_OS_IOS)
         dispatch_async(dispatch_get_main_queue(), ^ {
             [Countly.sharedInstance askForStarRating:^(NSInteger rating){
                 result([NSString stringWithFormat: @"Rating:%d", (int)rating]);
             }];
         });
-        #else
-        result(FlutterMethodNotImplemented);
-        #endif
     }else if ([@"getAvailableFeedbackWidgets" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             [Countly.sharedInstance getFeedbackWidgets:^(NSArray<CountlyFeedbackWidget *> * _Nonnull feedbackWidgets, NSError * _Nonnull error) {
@@ -825,7 +823,9 @@ FlutterMethodChannel* _channel;
                 }];
             }
         });
-    } else if ([@"reportFeedbackWidgetManually" isEqualToString:call.method]) {
+    } 
+    #endif
+    else if ([@"reportFeedbackWidgetManually" isEqualToString:call.method]) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSArray* widgetInfo = [command objectAtIndex:0];
             //        NSDictionary* widgetData = [command objectAtIndex:1];
