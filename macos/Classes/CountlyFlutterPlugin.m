@@ -989,6 +989,8 @@ FlutterMethodChannel* _channel;
         Countly.user.birthYear = @([byear integerValue]);
     }
 }
+
+#if (TARGET_OS_IOS)
 -(void) feedbackWidgetDataCallback:(NSDictionary * __nullable) widgetData error:(NSString * __nullable )error{
     NSMutableDictionary *feedbackWidgetData = [[NSMutableDictionary alloc] init];
     if(widgetData) {
@@ -1012,6 +1014,8 @@ FlutterMethodChannel* _channel;
     }
     return nil;
 }
+#endif
+
 - (CLLocationCoordinate2D) getCoordinate:(NSString*) gpsCoordinate
 {
     CLLocationCoordinate2D locationCoordinate = kCLLocationCoordinate2DInvalid;
