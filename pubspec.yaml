@@ -25,4 +25,6 @@ flutter:
         pluginClass: CountlyFlutterPlugin
       ios:
         pluginClass: CountlyFlutterPlugin
+      macos:
+        pluginClass: CountlyFlutterPlugin
 
